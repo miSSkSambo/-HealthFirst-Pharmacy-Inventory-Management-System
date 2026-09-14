@@ -1,0 +1,44 @@
+erDiagram
+    USERS {
+        INT user_id PK
+        VARCHAR username UK
+        VARCHAR password
+        ENUM role
+        VARCHAR full_name
+    }
+    SUPPLIERS {
+        INT supplier_id PK
+        VARCHAR name
+        VARCHAR contact_person
+        VARCHAR phone
+        VARCHAR email
+        TEXT address
+    }
+    MEDICINES {
+        INT medicine_id PK
+        VARCHAR name
+        VARCHAR company
+        VARCHAR medicine_type
+        DECIMAL price
+        INT quantity_in_stock
+        INT reorder_level
+        DATE expiry_date
+        INT supplier_id FK
+    }
+    SALES {
+        INT sale_id PK
+        TIMESTAMP sale_date
+        DECIMAL total_amount
+        INT user_id FK
+    }
+    SALE_ITEMS {
+        INT sale_item_id PK
+        INT sale_id FK
+        INT medicine_id FK
+        INT quantity_sold
+        DECIMAL price_at_sale
+    }
+    SUPPLIERS ||--o{ MEDICINES : supplies
+    USERS ||--o{ SALES : processes
+    SALES ||--|{ SALE_ITEMS : contains
+    MEDICINES ||--o{ SALE_ITEMS : sold_as
